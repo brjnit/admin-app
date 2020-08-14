@@ -4,8 +4,10 @@ flex-direction: column;
 height: 100%;
    .main {
     display: flex;
+    box-sizing: border-box;
     height: 100%;
     flex-direction: row;
+    background-color: #fafafa;
    }
     .leftPanel {
         width: 200px;
@@ -16,7 +18,12 @@ height: 100%;
        // width: 80%;
        padding: 5%;
        width: 100%;
+       margin: 1em;
        background: white;
+       border-radius: 15px;
+ box-shadow: 0 10px 15px -5px rgba(62, 57, 107, .07);
+ //0px 1px 1px -1px rgba(0,0,0,0.2),0px 1px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12);
+
        //background:red;
     }
     // .add-user {

@@ -108,7 +108,6 @@ export default function CustomDrawer(props) {
     ]
 
     const onClickListItem = (value) => () => {
-        console.log("target", value)
         onSelectedMenu(value)
         setMenu(value)
     }

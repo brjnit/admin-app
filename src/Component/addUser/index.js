@@ -7,19 +7,26 @@ import BasicButton from "../basicButton";
 import Footer from "../footer";
 
 const AddUser = (props) => {
-    const { placeHolder, value, onTextChange } = props
-    const [textValue, setTextValue] = useState('')
-    const handleChange = (event) => {
-        const currentValue = event.target.value
-        setTextValue(currentValue)
-        onTextChange(textValue)
-    }
-    useEffect(() => {
-        setTextValue(value)
-    }, []);
+    const { input, handleAddUser } = props
+    const [userName, setUserName] = useState('')
+    const [role, setRole] = useState('')
+    const [mobileNo, setMobileNumber] = useState('')
     
+    // const handleChange = (event) => {
+    //     const currentValue = event.target.value
+    //     setTextValue(currentValue)
+    //     onTextChange(textValue)
+    // }
+    // useEffect(() => {
+    //     setTextValue(value)
+    // }, []);
+    
+    const isButtonEnable = () => {
+        return userName!='' && role!='' && mobileNo
+    }
     const configAddUser = {
         buttonText: "Add User",
+        isEnable: isButtonEnable(),
         emitEvent: () => {}
     }
 
@@ -27,23 +34,29 @@ const AddUser = (props) => {
     const configUserNameField = {
         label: "User name:",
         placeHolder: "Enter your user name",
-        value: '',
+        value: input != null && input.userName != null ? input.userName : '',
         type: "text",
-        onTextChange: (value) => {}
+        onTextChange: (value) => {
+            setUserName(value)
+        }
     }
     const configUserRoleField = {
         label: "User Role:",
         placeHolder: "Enter your user name",
-        value: '',
+        value: input != null &&input.role != null ? input.role : '',
         type: "text",
-        onTextChange: (value) => {}
+        onTextChange: (value) => {
+            setRole(value)
+        }
     }
     const configMobileField = {
         label: "Mobile:",
         placeHolder: "Enter your user name",
-        value: '',
+        value: input != null &&input.mobileNo != null ? input.mobileNo : '',
         type: "text",
-        onTextChange: (value) => {}
+        onTextChange: (value) => {
+            setMobileNumber(value)
+        }
     }
     
 
@@ -53,16 +66,15 @@ const AddUser = (props) => {
         <TextField {...configUserRoleField}/>
         <TextField {...configMobileField}/>
         <Footer>
-                            <BasicButton  {...configAddUser} />
+                <BasicButton  {...configAddUser} />
             </Footer>
             
           </section>
     )
 }
 AddUser.propTypes = {
-    placeHolder: PropTypes.string,
-    value: PropTypes.string,
-    onTextChange: (value) => {}
+    input: PropTypes.object,
+    handleAddUser: () => {}
 }
 
 export default AddUser;

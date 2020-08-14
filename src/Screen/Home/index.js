@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import './styles.scss'
 import Header from '../../Component/header';
 import { Divider, TextField, Drawer } from '@material-ui/core';
@@ -7,90 +7,132 @@ import AddRole from '../../Component/addRole';
 import LeftPanel from '../../Component/leftPanel';
 import CustomDrawer from '../../Component/drawer';
 import AddUser from '../../Component/addUser';
+import Dashboard from '../../Component/dashboard';
+import Report from '../../Component/report';
 
-class Home extends Component {
-    constructor(props) {
-        super(props);
+const Home = (props) => {
+
+        const [selectedMenu, setSelectedMenu] = useState(1)
+        const [isAddUser, setAddUser] = useState(false)
+    
+       const usersList = [
+            { id: "1", name: 'Raja', role: 'Owner', status: "active" },
+            { id: "2", name: 'Ramu', role: 'staff', status: "active" }
+        ]
         
-        this.state = {
-            selectedMenu: 1 ,
-            usersList : [
-                { id: "1", name: 'Raja', role: 'Owner', status: "active" },
-                { id: "2", name: 'Ramu', role: 'staff', status: "active" }
-            ],
-            
-            serviceList: [
-                { id: "1", name: 'Raja', role: 'Owner', status: "active" },
-                { id: "2", name: 'Ramu', role: 'staff', status: "active" }
-            ],
-            
-             roleList: [
-                { id: "1", name: 'Raja', role: 'Owner', status: "active" },
-                { id: "2", name: 'Ramu', role: 'staff', status: "active" }
-            ]
-        }   
-    }
+        const serviceList = [
+            { id: "1", name: 'Raja', role: 'Owner', status: "active" },
+            { id: "2", name: 'Ramu', role: 'staff', status: "active" }
+        ]
+        
+        const roleList = [
+            { id: "1", name: 'Raja', role: 'Owner', status: "active" },
+            { id: "2", name: 'Ramu', role: 'staff', status: "active" }
+        ]
 
-    data = [
+    const data = [
         { id: "1", name: 'Raja', role: 'Owner', status: "active" },
         { id: "2", name: 'Ramu', role: 'staff', status: "active" }
     ]
 
-   
-   
+    const renderAddRole =(input) => {
+        if (isAddUser) {
+            if (input == null ) { 
+                return <AddUser/>
+            } else {
+                const [name, role] = input
+                const configAddUser = {
+                    input: {
+                        userName: name,
+                        role: role
+                    }
 
- onClickListItem = (value) => () => {
-    console.log("target", value)
-    this.state.selectedMenu = value
-}
-
-    handleSelectedMenu = () => {
+                }
+                return <AddUser {...configAddUser}/>
+            }
+            
+        }  
+    } 
+   const  handleSelectedMenu = () => {
     var data = {}
-    if (this.state.selectedMenu == 2) {
-        // data = {
-        //     title: "Users List",
-        //     data: this.state.usersList,
-        //     editAction: this.renderAddUser,
-        //     deleteAction: () => {},
-        //     addText: "Add User",
-        //     addAction: this.renderAddUser,
-        // }
+    if (selectedMenu == 2) {
         return <div> Current Status</div>
-    } else if (this.state.selectedMenu == 3) {
-        // data = {
-        //     title: "Services List",
-        //     data: this.state.usersList,
-        //     editAction: () => {},
-        //     deleteAction: () => {},
-        //     addText: "Add Service",
-        //     addAction: this.renderAddRole
-        // }
-        return <div> DashBoard</div>
-    } else if (this.state.selectedMenu == 4) {
-        // data = {
-        //     title: "Roles List",
-        //     data: this.state.roleList,
-        //     editAction: () => {},
-        //     deleteAction: () => {},
-        //     addText: "Add Role",
-        //     addAction: this.renderAddRole
-        // }  
-        // return <EditableTable {...data} />
-        return <div> DashBoard</div>
-    } else {
-        return <div> DashBoard</div>
+    } else if (selectedMenu == 3) {
+        return <Report/>
+    } else if (selectedMenu == 4) {
+        data = {
+            title: "User List",
+            data: usersList,
+            editAction: editUser,
+            deleteAction: () => {},
+            addText: "Add Role",
+            addAction: addUser
+        }  
+        return <EditableTable {...data} />
+    } else if (selectedMenu == 5) {
+        data = {
+            title: "Services List",
+            data: serviceList,
+            editAction: () => {},
+            deleteAction: () => {},
+            addText: "Add Service",
+            addAction: addUser
+        }
+        return <EditableTable {...data} />
+    } else if (selectedMenu == 6) {
+        data = {
+            title: "Roles List",
+            data: roleList,
+            editAction: () => {},
+            deleteAction: () => {},
+            addText: "Add Role",
+            addAction: addUser
+        }  
+        return <EditableTable {...data} />
+    }else {
+       const config = {
+           data: [{
+            title: "Dashboard",
+            subTitle: "status",
+            value: "124"
+           },{
+            title: "Report",
+            subTitle: "status",
+            value: "124"
+           },{
+            title: "Current",
+            subTitle: "status",
+            value: "124"
+           }]  
+        }
+        return <Dashboard {...config}/>
     }
     
 }
 
-componentDidMount () {
-    console.log("selectedMenu", this.state.selectedMenu)
-    this.handleSelectedMenu()
+const editUser = () => {
+    setAddUser(true)
+    handleRightPanel()
+}
+const handleRightPanel = () => {
+    if (isAddUser) {
+       return renderAddRole()
+   } else {
+       return handleSelectedMenu()
+   }
 }
 
+const addUser = () => {
+    setAddUser(true)
+    handleRightPanel()
+}
+ const handleMenuSelection = (value) => { 
+    setAddUser(false)
+    setSelectedMenu(value)
+   return  handleRightPanel()
+ }
 
-    render() {
-       
+
         const configHeader = {
             title: "Home",
             isBack: false,
@@ -100,29 +142,31 @@ componentDidMount () {
         }
 
        const configMenu = {
-            menuItems: [{id: 1, text: " Dashboard"},{id: 2, text: "Current Status"},{id: 3, text: "Report"},{id: 4, text: " Manage Users"}, {id: 5,text:"Manage Listing"}, {id: 6,text:"Roles"}],
-            onSelectedMenu: (value) => {
-                console.log("this.state.selectedMenu",this.state.selectedMenu)
-               this.state.selectedMenu = value
-            }
+            menuItems: [{id: 1, text: "Dashboard"},
+                        {id: 2, text: "Current Status"},
+                        {id: 3, text: "Report"},
+                        {id: 4, text: "Manage Users"}, 
+                        {id: 5, text: "Manage Listing"}, 
+                        {id: 6, text: "Roles"}],
+            onSelectedMenu: handleMenuSelection
         } 
+
+    //     useEffect(() => {
+    //         handleSelectedMenu()
+    // }, []);
         return (
             <div className = 'Home'>
                 <Header {...configHeader}/>
                 <div className = 'main'> 
                     <div className='leftPanel'> 
-                     <CustomDrawer {...configMenu}/>
+                     <CustomDrawer {...configMenu}/>                    
                     </div>
                     <div className='rightPanel'> 
-                    {console.log("this.state.selectedMenu",this.state.selectedMenu)}
-                    {this.handleSelectedMenu()}
+                        {handleRightPanel()}    
                     </div>
-                </div>
-                
-               
+                </div>  
             </div>
-        )
-    }
+        )  
 }
 
 Home.propTypes = {
