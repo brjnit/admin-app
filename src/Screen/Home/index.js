@@ -44,38 +44,43 @@ class Home extends Component {
     this.state.selectedMenu = value
 }
 
-    handleSelectedMenu() {
+    handleSelectedMenu = () => {
     var data = {}
-    if (this.state.selectedMenu == 1) {
-        data = {
-            title: "Users List",
-            data: this.state.usersList,
-            editAction: this.renderAddUser,
-            deleteAction: () => {},
-            addText: "Add User",
-            addAction: this.renderAddUser,
-        }
-    } else if (this.state.selectedMenu == 2) {
-        data = {
-            title: "Services List",
-            data: this.state.usersList,
-            editAction: () => {},
-            deleteAction: () => {},
-            addText: "Add Service",
-            addAction: this.renderAddRole
-        }
-         
+    if (this.state.selectedMenu == 2) {
+        // data = {
+        //     title: "Users List",
+        //     data: this.state.usersList,
+        //     editAction: this.renderAddUser,
+        //     deleteAction: () => {},
+        //     addText: "Add User",
+        //     addAction: this.renderAddUser,
+        // }
+        return <div> Current Status</div>
     } else if (this.state.selectedMenu == 3) {
-        data = {
-            title: "Roles List",
-            data: this.state.roleList,
-            editAction: () => {},
-            deleteAction: () => {},
-            addText: "Add Role",
-            addAction: this.renderAddRole
-        }  
+        // data = {
+        //     title: "Services List",
+        //     data: this.state.usersList,
+        //     editAction: () => {},
+        //     deleteAction: () => {},
+        //     addText: "Add Service",
+        //     addAction: this.renderAddRole
+        // }
+        return <div> DashBoard</div>
+    } else if (this.state.selectedMenu == 4) {
+        // data = {
+        //     title: "Roles List",
+        //     data: this.state.roleList,
+        //     editAction: () => {},
+        //     deleteAction: () => {},
+        //     addText: "Add Role",
+        //     addAction: this.renderAddRole
+        // }  
+        // return <EditableTable {...data} />
+        return <div> DashBoard</div>
+    } else {
+        return <div> DashBoard</div>
     }
-    return <EditableTable {...data} />
+    
 }
 
 componentDidMount () {
@@ -95,8 +100,9 @@ componentDidMount () {
         }
 
        const configMenu = {
-            menuItems: [{id: 1, text: " Manage Users"}, {id: 2,text:"Manage Listing"}, {id: 3,text:"Roles"}],
+            menuItems: [{id: 1, text: " Dashboard"},{id: 2, text: "Current Status"},{id: 3, text: "Report"},{id: 4, text: " Manage Users"}, {id: 5,text:"Manage Listing"}, {id: 6,text:"Roles"}],
             onSelectedMenu: (value) => {
+                console.log("this.state.selectedMenu",this.state.selectedMenu)
                this.state.selectedMenu = value
             }
         } 
@@ -108,6 +114,7 @@ componentDidMount () {
                      <CustomDrawer {...configMenu}/>
                     </div>
                     <div className='rightPanel'> 
+                    {console.log("this.state.selectedMenu",this.state.selectedMenu)}
                     {this.handleSelectedMenu()}
                     </div>
                 </div>
