@@ -4,18 +4,20 @@ import { Button } from '@material-ui/core';
 import './styles.scss'
 
 const BasicButton = (props) => {
-    const {buttonText, emitEvent} = props
-    const submitEvent = () => {
+    const {buttonText,isEnable, emitEvent} = props
+    const handleEvent = () => {
         emitEvent();
     }
     return(
-        <button className = "BasicButton"  onClick = {submitEvent} data-test="buttonComponent">
+        <button className = "BasicButton" disabled = {!isEnable} onClick = {handleEvent} data-test="buttonComponent">
+            {console.log("button Enable" ,isEnable)}
             {buttonText}
         </button>
     )
 }
 BasicButton.propTypes = {
     buttonText: PropTypes.string,
+    isEnable: PropTypes.bool = true,
     emitEvent: PropTypes.func
 }
 

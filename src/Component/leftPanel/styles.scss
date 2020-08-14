@@ -1,0 +1,18 @@
+
+.LeftSideBar__LeftSection__menuWrapper {
+  list-style-type: none;
+  margin: 1em;
+  padding: 0;
+
+  li {
+    margin-bottom: 1em;
+    
+    a {
+      font-size: 11pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: white;
+      text-decoration: none;
+    }
+  }
+}

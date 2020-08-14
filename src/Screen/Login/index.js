@@ -3,10 +3,13 @@ import './styles.scss'
 import Header from '../../Component/header';
 import Conatiner from '../../Component/conatiner';
 import Wrapper from '../../hoc/Wrapper';
-import Footer from '../../Component/footer';
-import BasicButton from '../../Component/basicButton';
+
 import TextField from '../../Component/textField';
 import Title from '../../Component/title';
+import SideDrawer from '../../Component/sideDrawer';
+import Toolbar from '../../Component/toolBar';
+import DropDown from '../../Component/dropDown';
+import LoginForm from '../../Component/loginForm';
 
 class Login extends Component {
     constructor(props) {
@@ -14,38 +17,34 @@ class Login extends Component {
     }
     render() {
         const configHeader = {
-            title: "Header Title",
+            title: "Login",
             isBack: false,
-            emitEvent: () => {}
-          }
-
-          const configFooter = {
-            buttonText: "Next",
-            emitEvent: () => {}
+            emitEvent: () => { },
         }
+
+        
 
         const configTextField = {
             placeHolder: "Enter User Name",
             value: "",
-            onTextChange: (value)=> {
+            onTextChange: (value) => {
                 console.log("value", value)
             }
         }
         return (
             <Wrapper>
-            <div className='Login'>
-                <Header {...configHeader}/>
-                <Conatiner> 
-                    <Title> Login Page </Title>
-                    <div> </div> 
-                    <div> <TextField {...configTextField}/>
-                    </div>
-                    <Footer>
-                        <BasicButton {...configFooter}/>
-                    </Footer>
-                </Conatiner>
+                <div className='Login'>
+                    {/* <SideDrawer/> */}
+                    {/* <Header {...configHeader} /> */}
+                    {/* <Toolbar {...configHeader}/> */}
+                    <LoginForm />
+                    {/* <Conatiner>
 
-            </div>
+                        
+                        
+                    </Conatiner> */}
+
+                </div>
             </Wrapper>
         )
     }

@@ -1,0 +1,29 @@
+.Home {
+display: flex;
+flex-direction: column;
+height: 100%;
+   .main {
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+   }
+    .leftPanel {
+        width: 200px;
+        height: 100%;
+        background: white;
+    }
+    .rightPanel {
+       // width: 80%;
+       padding: 5%;
+       // background:red;
+    }
+    // .add-user {
+    //     display: flex;
+    //     flex-flow: column;
+    //     padding: 50px;
+    //     width: 80%;
+    //     justify-content: center;
+
+    // }
+    
+}

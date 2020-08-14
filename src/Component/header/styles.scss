@@ -4,9 +4,13 @@ header {
     width: 100%;
     margin: 0 auto; 
     height: 60px; 
-    padding: 0 20px;
-    background: #ced6e0;
-  
+   // padding: 0 20px;
+    background: #424242;
+    .logo {
+      margin-left: 50px;
+      width: 90px;
+      height: 60px;
+    }
     .wrap {
       position: relative;
       display: flex;  

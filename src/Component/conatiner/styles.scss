@@ -1,9 +1,13 @@
 
 .container {
     display: block;  
-    width: 80%;
+    width: 60%;
     //height: 400px;
     margin: 0 auto; 
     //padding: 0 20px;
-    background: #f1f7fa;    
+    //background: #f1f7fa;    
+  }
+
+ @media (max-width: 480px) { 
+    .container { width: 100%;}
   }

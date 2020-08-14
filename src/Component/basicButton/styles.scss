@@ -1,5 +1,25 @@
 .BasicButton {
-    background-color: #14afdf;  
+  background:linear-gradient(#006cc2,transparent); 
+    opacity: 0.8;
+    backdrop-filter: saturate(180%) blur(20px);
     text-align: center; 
     width: 100%;
+    display: flex;  
+    height: 48px;
+    padding: 16px 16px 16px 16px; 
+    border-radius: 1em;
+    //border-color: #1da1f2;
+    border-width: 0em; 
+    justify-content: center; 
+    font-size: medium; 
+    align-items: center;
+    box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12);
+
+  }
+
+  .BasicButton:hover {opacity: 1}
+ .BasicButton:disabled { background: #ddd};
+
+  @media (max-width: 480px) { 
+    .BasicButton { width: 100px;}
   }

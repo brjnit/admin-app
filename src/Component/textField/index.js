@@ -4,7 +4,7 @@ import { Input } from '@material-ui/core';
 import './styles.scss'
 
 const TextField = (props) => {
-    const { placeHolder, value, onTextChange } = props
+    const { label, placeHolder, value, type, onTextChange } = props
     const [textValue, setTextValue] = useState('')
     const handleChange = (event) => {
         const currentValue = event.target.value
@@ -17,17 +17,28 @@ const TextField = (props) => {
     
     return (
         <div className="TextField">
-            <Input className="input"
+            <div className="full-width">
+             <div className="label">
+             {label}
+            </div>
+            
+             <input 
+             className="input"
             placeholder = {placeHolder}
             value={textValue}
             onChange={handleChange}
+            type= {type}
+
             />
+            </div>
         </div>
     )
 }
 TextField.propTypes = {
+    label: PropTypes.string,
     placeHolder: PropTypes.string,
     value: PropTypes.string,
+    type: PropTypes.string = "text",
     onTextChange: (value) => {}
 }
 

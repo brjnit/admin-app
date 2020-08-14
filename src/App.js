@@ -7,13 +7,11 @@ import Loader from './Component/loader';
 
 function App() {
   return (
-    <div>
       <Provider store={store}>
         <Router>
           <Routes />
         </Router>
       </Provider>
-    </div>
   );
 }
 

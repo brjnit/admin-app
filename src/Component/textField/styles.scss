@@ -1,6 +1,40 @@
 .TextField {
-   padding: 16px;
+    display: flex;
+    text-align: left;
 }
-.input {
+.label {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+.full-width{
+    display: flex;
+    justify-content: space-between;
     width: 100%;
 }
+
+.input {
+    text-align: left;
+    font: 1em sans-serif;
+    padding: 15px;
+   border-color:internal-light-dark-color(rgb(118, 118, 118), rgb(195, 195, 195));
+    //border-style: inset;
+    border-radius: 5px;
+    border-width: 1px;
+    text-rendering: auto;
+    color: -internal-light-dark-color(black, white);
+    margin: 20px;
+}
+
+.login-header {
+    font: 2em sans-serif;
+    color: white;
+    padding: 5%;
+    text-align: left;
+  }
+  .forgot-password {
+    font: 1em ;
+    padding: 5%;
+    text-align: left;
+    color: blue;
+  }
