@@ -1,36 +1,43 @@
 .TextField {
     display: flex;
     text-align: left;
+    flex-direction: column;
+    //background-color: white;
+    margin-bottom: 10px;
+    //color: black;
 }
 .label {
     display: flex;
     align-items: center;
-    padding: 10px;
 }
 .full-width{
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    flex-direction: column;
 }
 
 .input {
     text-align: left;
     font: 1em sans-serif;
     padding: 15px;
-   border-color:internal-light-dark-color(rgb(118, 118, 118), rgb(195, 195, 195));
+    border-color:internal-light-dark-color(rgb(118, 118, 118), rgb(195, 195, 195));
     //border-style: inset;
     border-radius: 5px;
     border-width: 1px;
     text-rendering: auto;
     color: -internal-light-dark-color(black, white);
-    margin: 20px;
+    margin-top: 10px;
+    outline-width: 0;
+}
+.input:focus {
+    outline-width: 0;
 }
 
 .login-header {
     font: 2em sans-serif;
     color: white;
     padding: 5%;
-    text-align: left;
+    text-align: center;
   }
   .forgot-password {
     font: 1em ;

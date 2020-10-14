@@ -1,6 +1,14 @@
 .Login {
+    display: flex;
     text-align: center;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-image : url("../../Assets/LoginBackground.png");
 }
+
+
 // @media (min-width: 768px) { 
 //     .Login { width: 50%;}
 //   }

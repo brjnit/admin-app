@@ -6,38 +6,38 @@ import EditDelete from '../EditDelete/EditDelete';
 import BasicButton from '../basicButton';
 
 export default function EditableTable(props) {
-    const { title, 
-         data,
+    const { title,
+        data,
         editAction,
         deleteAction,
         addText,
-        addAction} = props
-   
+        addAction } = props
+
     const renderTableHeader = () => {
-        if (data != null) {
-        let header = Object.keys(data[0])
-        return header.map((key, index) => {
+
+        return props.headers.map((key, index) => {
             return <th key={index}>{key.toUpperCase()}</th>
         })
+
     }
-    }
-    
+
     const configEditDelete = {
-        deleteEvent: deleteAction,
+        
         editEvent: editAction
     }
 
     const renderTableData = () => {
-        console.log("data   ## ",data)
-        return data!=null && data.map((item, index) => {
-            const { id, name, role, status } = item
+        console.log("data   ## ", data)
+        return data != null && data.map((item, index) => {
+            const { id, name, role, phoneNumber, emailId } = item
             return (
                 <tr key={id}>
                     <td>{id}</td>
                     <td>{name}</td>
+                    <td>{phoneNumber}</td>
+                    <td>{emailId}</td>
                     <td>{role}</td>
-                    <td>{status}</td>
-                    <td> <EditDelete {...configEditDelete}/></td>
+                    <td> <EditDelete deleteAction = {()=>{alert("delete"+ id)}} {...configEditDelete} /></td>
                 </tr>
             )
         })
@@ -51,15 +51,15 @@ export default function EditableTable(props) {
 
     return (
         <div className='grid'>
-            <div className='header'>{title}</div>
+            <div className='header'>{title}
+                <div className='addUser'> <BasicButton {...configAddUser} /></div>
+            </div>
             <table id='tableComponent'>
                 <tbody>
                     <tr>{renderTableHeader()}</tr>
                     {renderTableData()}
                 </tbody>
             </table>
-            
-            <div className='addUser'> <BasicButton {...configAddUser}/></div>
         </div>
 
 
@@ -115,4 +115,5 @@ EditableTable.propTypes = {
     deleteAction: PropTypes.func,
     addText: PropTypes.string,
     addAction: PropTypes.func,
+    headers: PropTypes.object
 }

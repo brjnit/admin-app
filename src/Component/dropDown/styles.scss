@@ -2,6 +2,7 @@
   text-transform: capitalize;
   padding: 1em;
   width: 100%;
+  color: white;
 }
 .form-group label {
   display: block;
@@ -22,4 +23,7 @@
   .filter-form {
     width: 70vw;
   }
+}
+.root-custom {
+  color: white;
 }

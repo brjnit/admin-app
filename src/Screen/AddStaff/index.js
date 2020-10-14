@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { fetchConfigurationList } from '../../Redux/actions/ConfigurationAction'
 import {selectLocation} from '../../Redux/actions/AccountActions'
 
-const Home = (props) => {
+const AddStaff = (props) => {
 
     const [selectedMenu, setSelectedMenu] = useState(1)
     const [isAddUser, setAddUser] = useState(false)
@@ -19,13 +19,22 @@ const Home = (props) => {
     useEffect(() => {
         props.fetchConfigurationList()
     }, []);
-  
+    const usersList = [
+        { id: "1", name: 'Raja', 'phoneNumber': "7028556731", role: 'Owner' },
+        { id: "2", name: 'Ramu', 'phoneNumber': "7588587980", role: 'staff' }
+    ]
+
     const serviceList = [
         { id: "1", name: 'Raja', role: 'Owner', status: "active" },
         { id: "2", name: 'Ramu', role: 'staff', status: "active" }
     ]
 
     const roleList = [
+        { id: "1", name: 'Raja', role: 'Owner', status: "active" },
+        { id: "2", name: 'Ramu', role: 'staff', status: "active" }
+    ]
+
+    const data = [
         { id: "1", name: 'Raja', role: 'Owner', status: "active" },
         { id: "2", name: 'Ramu', role: 'staff', status: "active" }
     ]
@@ -126,7 +135,6 @@ const Home = (props) => {
     const handleMenuSelection = (value) => {
         setAddUser(false)
         setSelectedMenu(value)
-
         return handleRightPanel()
     }
 
@@ -137,7 +145,11 @@ const Home = (props) => {
         if (options != null && options != undefined) {
             let optionsArray = Object.keys(options)
             console.log("[Home.js] optionsArray :: ", optionsArray)
-            
+
+            /*for(campus in options){
+                optionsArray.push(campus)
+            }*/
+
             for (var i = 0; i < optionsArray.length; i++) {
                 data.push(optionsArray[i])
             }
@@ -164,17 +176,18 @@ const Home = (props) => {
         handleLocationSelection : handleLocationSelection
     }
 
-    const menuItems =  [{ id: 1, text: "Dashboard" },
-    { id: 3, text: "Report" },
-    { id: 4, text: "Manage Staff" },
-    { id: 5, text: "Manage Listing" },
-    { id: 6, text: "Roles" }];
-
     const configMenu = {
-        menuItems: menuItems,
+        menuItems: [{ id: 1, text: "Dashboard" },
+        { id: 3, text: "Report" },
+        { id: 4, text: "Manage Users" },
+        { id: 5, text: "Manage Listing" },
+        { id: 6, text: "Roles" }],
         onSelectedMenu: handleMenuSelection
     }
 
+    //     useEffect(() => {
+    //         handleSelectedMenu()
+    // }, []);
     console.log("[Home.js]  configurationList :: ", props.configurationList)
     return (
 
@@ -185,14 +198,14 @@ const Home = (props) => {
                     <CustomDrawer {...configMenu} />
                 </div>
                 <div className='rightPanel'>
-                    {handleRightPanel()}
+                    <AddUser />
                 </div>
             </div>
         </div>
     )
 }
 
-Home.propTypes = {
+AddStaff.propTypes = {
     
 }
 
@@ -211,4 +224,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(AddStaff);

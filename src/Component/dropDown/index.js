@@ -4,23 +4,26 @@ import './styles.scss'
 import { Select,FormControl,MenuItem, InputLabel, Input } from "@material-ui/core";
 
 const DropDown = (props) => {
-    const {label, list,types, emitEvent} = props
-    const [selectedValue, setSelection ] = useState(label)
+    let {label, list, types, emitEvent, showLable, value} = props
+    
     const handleChange = (event) => {
         emitEvent(event.target.value);
-        setSelection(event.target.value)
+        
     }
+    console.log("[DropDown.js] value ", value)
+    if(showLable==undefined)
+      showLable = true
     return(
         <FormControl className="form-group">
-           <InputLabel htmlFor="select-helper">{label}</InputLabel>
+           {showLable&&<InputLabel htmlFor="select-helper">{label}</InputLabel>}
             <Select
-              variant="outlined"
-              value={selectedValue}
+              //variant="outlined"
+              value={value}
               onChange={handleChange}
-              input={<Input name={label} id="select-helper" />}
+              input={<Input />}
             >
               {list.map((item) => (
-                <MenuItem value={item}>{item}</MenuItem>
+                <MenuItem value={item} key={item}>{item}</MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -29,7 +32,10 @@ const DropDown = (props) => {
 DropDown.propTypes = {
     label: PropTypes.string,
     list: PropTypes.array,
-    emitEvent: PropTypes.func
+    emitEvent: PropTypes.func,
+    showLable : PropTypes.bool,
+    classes : PropTypes.object,
+    value : PropTypes.string
 }
 
 export default DropDown;

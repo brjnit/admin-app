@@ -4,8 +4,9 @@ import Home from "../Screen/Home";
 import Login from "../Screen/Login";
 import { useSelector } from "react-redux";
 import Loader from '../Component/loader';
-import AddUser from "../Component/addUser";
+import AddStaff from "../Screen/AddStaff";
 import AddRole from "../Component/addRole";
+
 const ProtectedRoute = ({ auth, component: Component, ...rest }) => {
     return (
         <Route
@@ -26,7 +27,7 @@ const Routes = () => {
         <Switch>
             <Route exact path="/" component={Login}/>
             <ProtectedRoute exact path="/home" component={Home} auth={isAuthenticated} />
-            <ProtectedRoute exact path="/home/adduser" component={AddUser} auth={isAuthenticated} />
+            <ProtectedRoute exact path="/home/AddStaff" component={AddStaff} auth={isAuthenticated} />
             <ProtectedRoute exact path="/home/addrole" component={AddRole} auth={isAuthenticated} />
         </Switch>
     )

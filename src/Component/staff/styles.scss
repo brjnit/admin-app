@@ -7,23 +7,6 @@
   margin: 20px;
 }
 
-.date_select {
-  margin: 20px 40px 20px 0px;
-  z-index: 10;
-
-  .inputLabel{
-    margin-bottom: 5px;;
-  }
-}
-
-.bottomAction {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: max-content;
-  margin-top: 50px;
-}
-
 .report:after {
     content: "";
     display: table;

@@ -4,11 +4,11 @@ import { Edit, Delete } from '@material-ui/icons';
 import './styles.scss'
 
 const EditDelete = (props) => {
-    const {editEvent, deleteEvent} = props
+    const {editEvent, deleteAction} = props
     
     return(
         <div className = "editDelete" >
-            <div  className = "delete" onClick = {deleteEvent}> <Delete/></div>
+            <div  className = "delete" onClick = {deleteAction}> <Delete/></div>
             <div onClick = {editEvent}><Edit/></div>
             </div>
     )

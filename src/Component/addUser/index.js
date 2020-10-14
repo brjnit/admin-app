@@ -1,80 +1,102 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import TextField from '../../Component/textField';
-
 import './styles.scss'
 import BasicButton from "../basicButton";
 import Footer from "../footer";
+import {connect} from 'react-redux'
+import DropDown from '../dropDown'
+import {addStaff} from '../../Redux/actions/UserActions'
 
 const AddUser = (props) => {
-    const { input, handleAddUser } = props
     const [userName, setUserName] = useState('')
     const [role, setRole] = useState('')
-    const [mobileNo, setMobileNumber] = useState('')
-    
-    // const handleChange = (event) => {
-    //     const currentValue = event.target.value
-    //     setTextValue(currentValue)
-    //     onTextChange(textValue)
-    // }
-    // useEffect(() => {
-    //     setTextValue(value)
-    // }, []);
-    
+    const [emailId, setEmailId] = useState('')
+    const [mobileNum, setMobileNumber] = useState('')
+
     const isButtonEnable = () => {
-        return userName!='' && role!='' && mobileNo
-    }
-    const configAddUser = {
-        buttonText: "Add User",
-        isEnable: isButtonEnable(),
-        emitEvent: () => {}
+        return userName != '' && role != '' && mobileNum != ''
     }
 
+    const handleAddStaff = () => {
+        props.addStaff(props.partnerId, mobileNum,  userName, emailId, role)
+    }
+
+    const configAddUser = {
+        buttonText: "ADD STAFF",
+        isEnable: isButtonEnable(),
+        emitEvent: handleAddStaff
+    }
 
     const configUserNameField = {
-        label: "User name:",
-        placeHolder: "Enter your user name",
-        value: input != null && input.userName != null ? input.userName : '',
+        label: "Name:",
+        placeholder: "Enter staff name",
+        value: userName,
         type: "text",
         onTextChange: (value) => {
             setUserName(value)
         }
     }
-    const configUserRoleField = {
-        label: "User Role:",
-        placeHolder: "Enter your user name",
-        value: input != null &&input.role != null ? input.role : '',
-        type: "text",
-        onTextChange: (value) => {
-            setRole(value)
-        }
-    }
+    
     const configMobileField = {
-        label: "Mobile:",
-        placeHolder: "Enter your user name",
-        value: input != null &&input.mobileNo != null ? input.mobileNo : '',
+        label: "Mobile Number:",
+        placeholder: "Enter mobile number",
+        value: mobileNum,
+        maxLength : 10,
         type: "text",
         onTextChange: (value) => {
             setMobileNumber(value)
         }
     }
-    
+
+    const configEmailId = {
+        label: "Email Id:",
+        placeholder: "Enter email (Optional)",
+        value: emailId,
+        type: "text",
+        onTextChange: (value) => {
+            setEmailId(value)
+        }
+    }
+
+
+    const configRoleSelect = {
+        label: "Role",
+        list: ['Admin', 'Security'],
+        emitEvent: (value) => {
+            setRole(value)
+        }
+    }
+
 
     return (
         <section className='add-user'>
-        <TextField {...configUserNameField}/>
-        <TextField {...configUserRoleField}/>
-        <TextField {...configMobileField}/>
-        <Footer>
+            <div className='header'>Enter Staff Details</div>
+            <TextField {...configUserNameField} />
+            <TextField {...configMobileField} />
+            <TextField {...configEmailId} />
+            <DropDown {...configRoleSelect} />
+            <Footer>
                 <BasicButton  {...configAddUser} />
             </Footer>
-            
-          </section>
+
+        </section>
     )
 }
 AddUser.propTypes = {
     input: PropTypes.object,
-    handleAddUser: () => {}
+    handleAddUser: () => { }
 }
 
-export default AddUser;
+const mapStateToProps = state =>{
+    return {
+        partnerId :  state.account.selectedLocation.id
+    }
+}
+
+const mapDispatchToProps = dispatch =>{
+    return {
+        addStaff : (partnerId, phoneNumber, userName, emailId, role) => dispatch(addStaff(partnerId, phoneNumber, userName, emailId, role))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AddUser);

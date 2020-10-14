@@ -1,6 +1,12 @@
 import {combineReducers} from 'redux';
 import LoadingReducer from './loadingReducer';
+import ConfigurationReducer from './configurationReducer'
+import AuthReducer from './AuthReducer'
+import AccoutReducer from './AccountReducer'
 
 export const rootReducer = combineReducers({
-   loading: LoadingReducer
+   loading: LoadingReducer,
+   configuration : ConfigurationReducer,
+   auth : AuthReducer,
+   account : AccoutReducer
 });

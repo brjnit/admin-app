@@ -1,5 +1,5 @@
-import { showLoadingIndicator, hideLoadingIndicator } from "../../redux/actions/LoadingActions";
-import store from '../Redux/store/configStore';
+import { showLoadingIndicator, hideLoadingIndicator } from "../Redux/actions/LoadingActions";
+//import store from '../Redux/store/configStore';
 
 
 export default class APIResponseHelper {
@@ -23,12 +23,10 @@ export default class APIResponseHelper {
             }catch (error){
                 console.log("[APIResponseHelper.js] exception trying to parse the response :: ", error)
             } finally{
-                if(showLoadingIndicator)
-                    store.dispatch(hideLoadingIndicator());
+               
             }
         }else{
-            if(showLoadingIndicator)
-                store.dispatch(hideLoadingIndicator());
+           
         }
         console.log("[APIResponseHelper.js] returning from APIResponseHelper")
         return {status : status, dataAvailable : dataAvailable, data : jsonData}

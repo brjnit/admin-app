@@ -3,26 +3,31 @@ header {
     display: flex;  
     width: 100%;
     margin: 0 auto; 
-    height: 60px; 
-   // padding: 0 20px;
-    background: #424242;
+    height: 50px; 
+    align-items: center;
+    background: #1da1f2;
     .logo {
       margin-left: 50px;
       width: 90px;
       height: 60px;
     }
     .wrap {
-      position: relative;
-      display: flex;  
+      //position: relative;
+      //display: flex;  
       margin: 0 auto;
       color: white;
       align-items: center;
       text-align: center;
+      background:rgba(256, 256, 256, 0.5);
+
     }
-  
+    .headerText {
+      font-size: 1.2em;
+      color: white;
+    }
     .button {
       size: inherit;;
-      margin: 20px 100px;
+      margin: 20px;
       background: transparent;
      :hover {
       background: transparent;

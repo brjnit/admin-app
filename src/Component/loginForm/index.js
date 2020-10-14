@@ -1,85 +1,74 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import TextField from '../../Component/textField';
 import './styles.scss'
-import Footer from '../../Component/footer';
 import BasicButton from '../../Component/basicButton';
-import { useDispatch } from "react-redux";
+import { connect } from "react-redux";  
+import {sendOTP, verifyOTP} from '../../Redux/actions/AuthActions'
+import {Redirect} from 'react-router-dom'
 
 const LoginForm = (props) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const dispatch = useDispatch();
+    const [showOTPInput, setShowOTPInput] = useState(false);
     const configUserNameField = {
-        label: "User Name :",
-        placeHolder: "Enter User Name",
-        value: '',
+        label: "MOBILE NUMBER",
+        placeHolder: "",
+        value: username,
+        maxLength :10,
         onTextChange: (value) => {
-            const isValid = /^([a-zA-Z0-9]{4,20})$/.test(value)
-            if (isValid) {
-                setUsername(value)
-            } else {
-                setUsername('')
-            }
+            setUsername(value)
             isLoginEnable()
         }
     }
     const configPasswordField = {
-        label: "Password :",
-        placeHolder: "Enter your password",
-        value: '',
+        label: "OTP",
+        placeHolder: "",
+        value: password,
         type: "password",
+        maxLength : 4,
         onTextChange: (value) => {
-            const isValid = /^([a-zA-Z0-9._]{4,20})$/.test(value)
-            if (isValid) {
-                setPassword(value)
-            } else {
-                setPassword('')
-            }
+            setPassword(value)
             isLoginEnable()
         }
     }
     const isLoginEnable = () => {
-        console.log("username ", username, "password ", password)
-        return  username!='' && password!=''
+        console.log("username ", username, "length ", username.length, "showOTPInput ", showOTPInput)
+        let isEnabled = false;
+        if(!showOTPInput && username != '' && username.length == 10)
+            isEnabled = true
+        else if(showOTPInput && password != '' && password.length == 4) 
+            isEnabled = true
+
+        return isEnabled
     }
 
     const handleLoginTap = () => {
         console.log(username, password)
-        //dispatch(onLogin(username, password))
+        props.verifyOTP(username, password)
     }
+
+    const sendOTP = () =>{
+        setShowOTPInput(true)
+        props.sendOTP(username)
+    }
+
     let configLoginButton = {
-        buttonText: "Login",
+        buttonText: showOTPInput?"VERIFY OTP":"LOGIN",
         isEnable: isLoginEnable(),
-        emitEvent: handleLoginTap
+        emitEvent: showOTPInput?handleLoginTap:sendOTP
     }
-
-    const configRegisterButton = {
-        buttonText: "Register",
-        isEnable: true,
-        emitEvent: () => { }
-    }
-
-    useEffect(() => {
-       // configLoginButton.isEnable = isLoginEnable()
-        
-    }, []);
-    
+    console.log("[loginform.js] props ", props)
     return (
         <div className="loginForm">
-            <div className = "login-header">Login</div>
-            <div className = "formComponent"> 
-            <TextField {...configUserNameField}/>
-            <TextField {...configPasswordField}/>
-            <div className = "forgot-password" onClick = {() => {}}>Forgot your password?</div>
+            {props.isAuthenticated&& <Redirect to = "/home"/>}
+            <div className="login-header">DG Manager</div>
+            <div className="formComponent">
+                <TextField {...configUserNameField} />
+                {showOTPInput && <TextField {...configPasswordField} />}
             </div>
-            <Footer>
-                    <BasicButton  {...configLoginButton} />
-            </Footer>
-
-            <Footer>
-                    <BasicButton  {...configRegisterButton} />
-            </Footer>
+                <BasicButton  {...configLoginButton} />
+            
         </div>
     )
 }
@@ -87,4 +76,15 @@ LoginForm.propTypes = {
     placeHolder: PropTypes.string,
 }
 
-export default LoginForm;
+const mapStateToProps = state =>{
+    return {
+        isAuthenticated : state.auth.isAuthenticated
+    }
+}
+const mapDispatchToProps = (dispatch) =>{
+    return {
+        sendOTP : (mobNum) => dispatch(sendOTP(mobNum)),
+        verifyOTP : (mobNum, OTP) => dispatch(verifyOTP(mobNum, OTP))
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(LoginForm);

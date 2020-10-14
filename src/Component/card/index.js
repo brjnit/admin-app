@@ -1,26 +1,23 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import './styles.scss'
-import { AccountBalance } from "@material-ui/icons";
+import CallReceivedIcon from '@material-ui/icons/CallReceived';
 const Card = (props) => {
     const { title, subTitle, value } = props
- 
+
     return (
         <div className="card">
-             <div className="title">
-             {title}
-            </div> 
+            <div className="title">
+                {title}
+                <CallReceivedIcon />
+            </div>
             <div className="subTitle">
-             {subTitle}
-            </div> 
-            <div className="subTitle">
-            <div className="bottom">
-             <div>{value}</div>
-             <AccountBalance/>
-            </div> 
-            {/* <img className="right"  > </img> */}
-             
-            </div> 
+                {value}
+            </div>
+            <div>
+                <div className="bottom">
+                </div>
+            </div>
         </div>
     )
 }

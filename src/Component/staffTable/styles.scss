@@ -7,24 +7,27 @@
    
 }
 .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     text-align: left;
     padding: 10px 0px;
-    color: blanchedalmond;
-    font: 1.5em sans-serif;
+    color: black;
+    font: 1.2em sans-serif;
+    margin-bottom: 20px;
+    align-items: center;
   }
   
   #tableComponent {
     text-align: center;
-    //border-collapse: collapse;
-    //border: 3px solid #ddd;
- 
     width: 100%;
   }
   
   #tableComponent td, #tableComponent th {
-   //border: 1px solid #ddd;
+   border: 1px solid #ddd;
     padding: 8px;
   }
+
   
   //#tableComponent tr:nth-child(even){background-color: #f2f2f2;}
   
@@ -37,12 +40,16 @@
     background-color: #4CAF50;
     color: white;
   }
+  #tableComponent tr {
+    border: 1px solid #ddd;
+  }
 
   .addUser {
     display: flex;
     float: right;
     justify-content: end;
-    width: 120px;
+    width: max-content;
     height: 40px;
-    margin-top: 50px;
+    margin-left: 30px;
+    //margin-top: 50px;
   }
