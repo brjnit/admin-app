@@ -1,5 +1,4 @@
 import { GET, POST, DELETE, PUT} from "./MethodType";
-import { BeenhereRounded } from "@material-ui/icons";
 
 const apiList = {
     sendOTP : {
@@ -36,6 +35,31 @@ const apiList = {
         path : "/staff",
         method : POST,
         params : ['partnerId', 'phoneNumber', 'userName', 'emailId', 'role']
+    },
+    addNewUser: {
+        path : "/consumer",
+        method : POST,
+        params : ["name", "phoneNumber", "emailId", "campus", "companyName", "employeeId", "appVersion", "profilePicLink"]
+    },
+    editStaff : {
+        path : "/staff",
+        method : PUT,
+        params : ['id','partnerId', 'phoneNumber', 'userName', 'emailId', 'role']
+    },
+    deleteStaff :{
+        path : "/staff",
+        method : PUT,
+        params : ['id', 'isDeleted']
+    },
+    getDashBoardData : {
+        path : 'enquiry/status/count?start=$startDate&end=$endDate&campus=$campus&enquiryType=$enquiryType',
+        method : GET,
+        params : ['startDate', 'endDate', 'campus', 'enquiryType']
+    },
+    getConsumerByPhone : {
+        path : '/consumerByPhoneNumber/$phoneNumber',
+        method : GET,
+        params : ['phoneNumber']
     }
 }    
 

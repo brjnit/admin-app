@@ -4,7 +4,7 @@ import './styles.scss'
 import Wrapper from "../../hoc/Wrapper";
 import { connect } from "react-redux";
 import EditableTable from '../staffTable'
-import {getStaffList} from '../../Redux/actions/AccountActions'
+import {getStaffList, deleteStaff} from '../../Redux/actions/AccountActions'
 
 
 const Staff = (props) => {
@@ -20,16 +20,22 @@ const Staff = (props) => {
         return data;
     }
 
+    const deleteStaffHandler = (id) =>{
+        console.log("[staff.js] selected staff id ", id)
+        props.deleteStaff(id, props.selectedLocation.id)
+    }
 
     const data = {
         title : "Manage Staff",
         data : getData(),
         //editAction: editUser,
-        deleteAction: () => { },
         addText : "ADD STAFF",
         headers : ["Id", "Name", "Mobile Number", "Email Id", "Role", "Action"],
-        addAction: props.addAction
+        addAction: props.addAction,
+        deleteAction : deleteStaffHandler
     }
+
+   
 
     useEffect(() => {
         props.getStaffList(props.selectedLocation.id)
@@ -59,7 +65,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch =>{
     return {
-        getStaffList : (partnerId) => dispatch(getStaffList(partnerId))
+        getStaffList : (partnerId) => dispatch(getStaffList(partnerId)),
+        deleteStaff : (staffId,partnerId) => dispatch(deleteStaff(staffId, partnerId))
     }
 }
 

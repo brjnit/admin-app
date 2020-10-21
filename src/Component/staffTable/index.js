@@ -1,9 +1,10 @@
 
-import React from 'react';
+import React,{useState} from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss'
 import EditDelete from '../EditDelete/EditDelete';
 import BasicButton from '../basicButton';
+import ConfirmationDialogue from '../confirmationDialogue'
 
 export default function EditableTable(props) {
     const { title,
@@ -12,6 +13,8 @@ export default function EditableTable(props) {
         deleteAction,
         addText,
         addAction } = props
+    const[showDialogue, setShowDialogue] = useState(false)
+    const[selectedId, setSelectedId] = useState(0)
 
     const renderTableHeader = () => {
 
@@ -31,13 +34,14 @@ export default function EditableTable(props) {
         return data != null && data.map((item, index) => {
             const { id, name, role, phoneNumber, emailId } = item
             return (
+                
                 <tr key={id}>
                     <td>{id}</td>
                     <td>{name}</td>
                     <td>{phoneNumber}</td>
                     <td>{emailId}</td>
                     <td>{role}</td>
-                    <td> <EditDelete deleteAction = {()=>{alert("delete"+ id)}} {...configEditDelete} /></td>
+                    <td> <EditDelete deleteAction = {()=>{setShowDialogue(true); setSelectedId(id)}} {...configEditDelete} /></td>
                 </tr>
             )
         })
@@ -60,6 +64,13 @@ export default function EditableTable(props) {
                     {renderTableData()}
                 </tbody>
             </table>
+            <ConfirmationDialogue 
+                open = {showDialogue}
+                handleNo = {() => setShowDialogue(false)}
+                handleYes = {()=>{setShowDialogue(false); props.deleteAction(selectedId)}}
+                body = "Are you sure you want to delete this user?"
+                title = "CONFIRM"
+            />
         </div>
 
 

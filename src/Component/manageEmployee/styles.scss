@@ -1,0 +1,37 @@
+.report{
+  display: flex,
+}
+
+.compus_select {
+  min-width: 200px;
+  margin: 20px;
+}
+
+.date_select {
+  margin: 20px 40px 20px 0px;
+  z-index: 10;
+
+  .inputLabel{
+    margin-bottom: 5px;;
+  }
+}
+
+.manageOption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: max-content;
+  margin-top: 20px;
+}
+
+.report:after {
+    content: "";
+    display: table;
+    justify-content: space-between; 
+    clear: both;
+  }
+@media (max-width: 950px) { 
+    .report {  flex-direction: column;
+        transition: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    }
+  }

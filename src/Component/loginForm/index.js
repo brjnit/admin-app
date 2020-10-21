@@ -6,6 +6,7 @@ import BasicButton from '../../Component/basicButton';
 import { connect } from "react-redux";  
 import {sendOTP, verifyOTP} from '../../Redux/actions/AuthActions'
 import {Redirect} from 'react-router-dom'
+import Loader from '../loader'
 
 const LoginForm = (props) => {
     const [username, setUsername] = useState('')
@@ -68,7 +69,10 @@ const LoginForm = (props) => {
                 {showOTPInput && <TextField {...configPasswordField} />}
             </div>
                 <BasicButton  {...configLoginButton} />
-            
+                <div style = {{marginTop : 10}}>
+                {props.authenticating&&<Loader/>}
+                </div>
+
         </div>
     )
 }
@@ -78,7 +82,8 @@ LoginForm.propTypes = {
 
 const mapStateToProps = state =>{
     return {
-        isAuthenticated : state.auth.isAuthenticated
+        isAuthenticated : state.auth.isAuthenticated,
+        authenticating : state.auth.authenticating
     }
 }
 const mapDispatchToProps = (dispatch) =>{

@@ -1,17 +1,34 @@
-import {VERIFY_OTP, SEND_OTP, UPDATE_USER_DETAILS} from './actionTypes'
+import {VERIFY_OTP, SEND_OTP, UPDATE_USER_DETAILS, AUTH_START, AUTH_STOP} from './actionTypes'
 import APIRequest from '../../Network/APIRequest';
 
 export const sendOTP = ( mobNum) =>{
     return (dispatch)=>{
         let apiRequest = new APIRequest()
         let inputParam = {"mobile" : mobNum};
+        dispatch(authStart())
         apiRequest.callAPI("sendOTP", inputParam).then((response) =>{
             console.log("[AuthActions.js] response", response)
             if(response.status == 200){
-                //dispatch(sendOTPResult(mobNum))
+                dispatch(authStop())
+            } else {
+                dispatch(authStop())
             }
         });    
     }  
+}
+
+export  const authStart = () =>{
+    return {
+       type : AUTH_START,
+       authenticating : true
+    }
+}
+
+export  const authStop = () =>{
+    return {
+       type : AUTH_STOP,
+       authenticating : false
+    }
 }
 
 
@@ -20,18 +37,23 @@ export const verifyOTP = (mobNum, OTP) =>{
     return (dispatch)=>{
         let apiRequest = new APIRequest()
         let inputParam = {"mobile" : mobNum, "otp": OTP, "userType" : "partner"};
+        dispatch(authStart());
         apiRequest.callAPI("verifyOTP", inputParam).then((response) =>{
             console.log("[AuthActions.js] response verifyOTP", response)
             if(response.status == 200){
                 response = response.data
                 if(response.isVerified){
                     const partnerId = response.id;
-                    dispatch(verifyOTPResult(true))
+                    
                     dispatch(getStaffPartnerDetails(partnerId))
                 } else {
+                    dispatch(authStop());
                     alert("User authentication failed. Please try again")
                 } 
-            }
+            }   else {
+                dispatch(authStop());
+                alert("User authentication failed. Please try again")
+            } 
         });
     }  
 }
@@ -51,7 +73,15 @@ export const getStaffPartnerDetails = (staffId) =>{
             console.log("[AuthActions.js] response getStaffPartnerDetails", response)
             if(response.status == 200){
                 response = response.data
-                dispatch(updateStaffAndPartnerDetails(response.partner, response.staff))
+                if(response.staff.role == "Admin"){
+                    dispatch(verifyOTPResult(true))
+                    dispatch(authStop())
+                    dispatch(updateStaffAndPartnerDetails(response.partner, response.staff))
+                    
+                } else {
+                    alert("You are not authorized to access the dashboard   ")
+                    dispatch(authStop())
+                }
             }
         });
     } 

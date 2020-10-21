@@ -96,14 +96,16 @@ const Report = (props) => {
         const  options = props.configurationList['divaysree_company_list']
         console.log("[Report.js] options :: ", options)
         let data = ['All']
-        const companies = options[campus]
-        console.log("[Report.js] companies :: ", companies)
+        if(options!=null && options!=undefined){
+            const companies = options[campus]
+            console.log("[Report.js] companies :: ", companies)
 
-        if(companies != null && companies != undefined){
-            let optionsArray = Object.keys(companies)
-            
-            for(var i = 0; i < optionsArray.length; i++){
-                data.push(optionsArray[i] )
+            if(companies != null && companies != undefined){
+                let optionsArray = Object.keys(companies)
+                
+                for(var i = 0; i < optionsArray.length; i++){
+                    data.push(optionsArray[i] )
+                }
             }
         }
         return data;

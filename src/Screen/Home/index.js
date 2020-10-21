@@ -10,11 +10,15 @@ import Report from '../../Component/report';
 import { connect } from 'react-redux';
 import { fetchConfigurationList } from '../../Redux/actions/ConfigurationAction'
 import {selectLocation} from '../../Redux/actions/AccountActions'
+import {withRouter} from 'react-router-dom'
+import ManageEmployee from '../../Component/manageEmployee'
+import AddCustomer from '../../Component/addCustomer'
 
 const Home = (props) => {
 
     const [selectedMenu, setSelectedMenu] = useState(1)
     const [isAddUser, setAddUser] = useState(false)
+    const [showMenu, setShowMenu] = useState(true)
 
     useEffect(() => {
         props.fetchConfigurationList()
@@ -48,85 +52,75 @@ const Home = (props) => {
 
         }
     }
-    const handleSelectedMenu = () => {
-        var data = {}
-        if (selectedMenu == 2) {
-            return <div> Current Status</div>
-        } else if (selectedMenu == 3) {
-            return <Report />
-        } else if (selectedMenu == 4) {
-            data = {
-                editAction: editUser,
-                deleteAction: () => { },
-                addAction: addUser
-            }
-            return <Staff selectedLocation = {props.selectedLocation} {...data}/>
-        } else if (selectedMenu == 5) {
-            data = {
-                title: "Services List",
-                data: serviceList,
-                editAction: () => { },
-                deleteAction: () => { },
-                addText: "Add Service",
-                addAction: addUser
-            }
-            return <EditableTable {...data} />
-        } else if (selectedMenu == 6) {
-            data = {
-                title: "Roles List",
-                data: roleList,
-                editAction: () => { },
-                deleteAction: () => { },
-                addText: "Add Role",
-                addAction: addUser
-            }
-            return <EditableTable {...data} />
-        } else {
-            const config = {
-                data: [{
-                    title: "Checked In",
-                    subTitle: "status",
-                    value: "100"
-                }, {
-                    title: "Checked Out",
-                    subTitle: "status",
-                    value: "10"
-                }, {
-                    title: "New",
-                    subTitle: "status",
-                    value: "80"
-                }, {
-                    title: "Denied",
-                    subTitle: "status",
-                    value: "2"
-                }]
-            }
-            return <Dashboard {...config} />
-        }
-
-    }
 
     const editUser = () => {
         setAddUser(true)
         handleRightPanel()
     }
+
     const handleRightPanel = () => {
-        if (isAddUser) {
-            return renderAddRole()
-        } else {
-            return handleSelectedMenu()
+        const hash = props.location.hash
+        var data = {}
+        switch (hash) {
+            case "#ManageEmployee" :
+                return <ManageEmployee/>
+                break;
+            case "#Report" :
+                return <Report />
+                break;
+            case "#ManageStaff" : {
+                data = {
+                    editAction: editUser,
+                    deleteAction: () => { },
+                    addAction: addUser
+                }
+                return <Staff selectedLocation = {props.selectedLocation} {...data}/>
+                break;
+            }
+            case "#AddStaff" : {
+                data = {
+                    editAction: editUser,
+                    deleteAction: () => { },
+                    addAction: addUser
+                }
+                return <AddUser />
+                break;
+            }
+            case "#AddUser" : {
+                return <AddCustomer />
+                break;
+            }
+            default :{
+                const config = {
+                    data: [{
+                        title: "Checked In",
+                        subTitle: "status",
+                        value: "100"
+                    }, {
+                        title: "Checked Out",
+                        subTitle: "status",
+                        value: "10"
+                    }, {
+                        title: "New",
+                        subTitle: "status",
+                        value: "80"
+                    }, {
+                        title: "Denied",
+                        subTitle: "status",
+                        value: "2"
+                    }]
+                }
+                return <Dashboard {...config} />
+            }        
         }
     }
 
     const addUser = () => {
-        setAddUser(true)
-        handleRightPanel()
         
+        props.history.push({ to:'/home', hash:"AddStaff"})
     }
-    const handleMenuSelection = (value) => {
-        setAddUser(false)
-        setSelectedMenu(value)
-
+    const handleMenuSelection = (hash) => {
+        props.history.push({ to:'/home', hash:hash})
         return handleRightPanel()
     }
 
@@ -156,7 +150,7 @@ const Home = (props) => {
     const configHeader = {
         title: "Home",
         isBack: false,
-        emitEvent: () => { },
+        leftButtonAction: () => {setShowMenu(!showMenu) },
         isLoggedIn: true,
         logoutEvent: () => { },
         selectedLocation: props.selectedLocation.name,
@@ -164,11 +158,12 @@ const Home = (props) => {
         handleLocationSelection : handleLocationSelection
     }
 
-    const menuItems =  [{ id: 1, text: "Dashboard" },
-    { id: 3, text: "Report" },
-    { id: 4, text: "Manage Staff" },
-    { id: 5, text: "Manage Listing" },
-    { id: 6, text: "Roles" }];
+    const menuItems =  [
+        { id: 1, text: "Dashboard" },
+        { id: 3, text: "Report", hash : "Report" },
+        { id: 4, text: "Manage Staff", hash : "ManageStaff" },
+        { id: 5, text: "Manage Employee", hash : "ManageEmployee"},
+    ];
 
     const configMenu = {
         menuItems: menuItems,
@@ -176,14 +171,15 @@ const Home = (props) => {
     }
 
     console.log("[Home.js]  configurationList :: ", props.configurationList)
+    console.log("[Home.js]  props :: ", props)
     return (
 
         <div className='Home'>
             <Header {...configHeader} />
             <div className='main'>
-                <div className='leftPanel'>
+                {showMenu&&<div className='leftPanel'>
                     <CustomDrawer {...configMenu} />
-                </div>
+                </div>}
                 <div className='rightPanel'>
                     {handleRightPanel()}
                 </div>
@@ -211,4 +207,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

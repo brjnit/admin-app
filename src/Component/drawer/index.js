@@ -83,7 +83,7 @@ export default function CustomDrawer(props) {
                 <div className={classes.drawerContainer}>
                     <List  >
                         {menuItems != null && menuItems.map(item => (
-                            <ListItem button key={item.id} onClick={onClickListItem(item.id)}>
+                            <ListItem button key={item.id} onClick={onClickListItem(item.hash)}>
                                 <ListItemIcon  >
                                     {item.id % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                                 </ListItemIcon>

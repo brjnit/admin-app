@@ -7,10 +7,10 @@ import DropDown from '../dropDown'
 
 
 const Header = (props) => {
-    const { title, isBack, emitEvent, isLoggedIn, logoutEvent, locations, selectedLocation, handleLocationSelection } = props
+    const { title, isBack, leftButtonAction, isLoggedIn, logoutEvent, locations, selectedLocation, handleLocationSelection } = props
     const submitEvent = () => {
         console.log("event triggered")
-        emitEvent();
+        leftButtonAction();
     }
 
     const configLocationSelect = {

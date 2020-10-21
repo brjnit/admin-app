@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import Loader from '../Component/loader';
 import AddStaff from "../Screen/AddStaff";
 import AddRole from "../Component/addRole";
+import {connect} from 'react-redux'
 
 const ProtectedRoute = ({ auth, component: Component, ...rest }) => {
     return (
@@ -17,8 +18,8 @@ const ProtectedRoute = ({ auth, component: Component, ...rest }) => {
     )
 }
 
-const Routes = () => {
-    const [isAuthenticated, authenticate] = useState(true)
+const Routes = (props) => {
+    const isAuthenticated = props.isAuthenticated;
     const isLaoding = useSelector(state => state.loading.showLoader);
     if (isLaoding) {
             return (<Loader/>)
@@ -32,4 +33,10 @@ const Routes = () => {
         </Switch>
     )
 }
-export default withRouter(Routes)
+
+const mapStateToProps = state =>{
+    return {
+        isAuthenticated : state.auth.isAuthenticated
+    }
+}
+export default withRouter(connect(mapStateToProps,null)(Routes))
