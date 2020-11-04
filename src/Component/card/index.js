@@ -8,7 +8,7 @@ const Card = (props) => {
     return (
         <div className="card">
             <div className="title">
-                {title}
+                {title.toUpperCase()}
                 <CallReceivedIcon />
             </div>
             <div className="subTitle">

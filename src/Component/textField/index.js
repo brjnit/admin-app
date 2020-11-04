@@ -4,7 +4,7 @@ import { Input } from '@material-ui/core';
 import './styles.scss'
 
 const TextField = (props) => {
-    const { label, placeHolder, value, type, onTextChange } = props
+    const { label, placeHolder, value, type, onTextChange, error } = props
     const handleChange = (event) => {
         const currentValue = event.target.value
         onTextChange(currentValue)
@@ -23,6 +23,7 @@ const TextField = (props) => {
                     type={type}
                     {...props}
                 />
+                <div className = "errorMessage">{error}</div>
             </div>
         </div>
     )

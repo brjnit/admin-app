@@ -1,0 +1,20 @@
+.report{
+  display: flex,
+}
+
+.compus_select {
+  min-width: 200px;
+  margin: 20px;
+}
+
+.report:after {
+    content: "";
+    display: table;
+    justify-content: space-between; 
+    clear: both;
+  }
+@media (max-width: 950px) { 
+    .report {  flex-direction: column;
+        transition: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    }
+  }

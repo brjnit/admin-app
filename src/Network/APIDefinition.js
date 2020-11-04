@@ -52,7 +52,7 @@ const apiList = {
         params : ['id', 'isDeleted']
     },
     getDashBoardData : {
-        path : 'enquiry/status/count?start=$startDate&end=$endDate&campus=$campus&enquiryType=$enquiryType',
+        path : '/enquiry/status/count?start=$startDate&campus=$campus&enquiryType=$enquiryType&end=$endDate',
         method : GET,
         params : ['startDate', 'endDate', 'campus', 'enquiryType']
     },

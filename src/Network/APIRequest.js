@@ -19,10 +19,11 @@ export default class APIRequest {
                 requestPath = this.generateGETRequest(requestTemplate, inputParams);
                 let headers = {
                 }
-                //  if( state.auth.partnerDtls.tenant != null && state.auth.partnerDtls.tenant != undefined){
-                //      headers["tenant"] = state.auth.partnerDtls.tenant
-                //  }
-                headers["tenant"] = 'technopolis'
+                console.log("[APIRequest.js]  partnerDtls :: ",state.auth.partnerDtls);
+                if( state.auth.partnerDtls.tenant != null && state.auth.partnerDtls.tenant != undefined){
+                    headers["tenant"] = state.auth.partnerDtls.tenant
+                }
+                //headers["tenant"] = 'technopolis'
                 postBody = {
                             method: GET,
                             headers: headers
@@ -77,16 +78,16 @@ export default class APIRequest {
     }
 
     generatePOSTBody = (requestTemplate, inputParams) =>{
-        //const state = store.getState();
+        const state = store.getState();
         let headers = {
             Accept: 'application/json',
             'Content-Type': 'application/json',
             
         }
-        // if( state.store.partnerDetails.tenant != null){
-        //     headers["tenant"] = state.store.partnerDetails.tenant
-        // }
-        headers["tenant"] = 'technopolis'
+        if( state.auth.partnerDtls.tenant != null && state.auth.partnerDtls.tenant != undefined){
+            headers["tenant"] = state.auth.partnerDtls.tenant
+        }
+        //headers["tenant"] = 'technopolis'
         let body = {
             method: requestTemplate.method,
             headers: headers,

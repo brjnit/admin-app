@@ -153,10 +153,8 @@ const AddStaff = (props) => {
             for (var i = 0; i < optionsArray.length; i++) {
                 data.push(optionsArray[i])
             }
-            console.log("[home.js] defaultLocation :: ",{'name':optionsArray[0], 'id': options[optionsArray[0]].id})
         }
         console.log("[Home.js] data :: ", data)
-        
         return data;
     }
 

@@ -1,7 +1,7 @@
-import {UPDATE_USER_DETAILS, VERIFY_OTP, AUTH_START, AUTH_STOP} from '../../actions/actionTypes'
+import {UPDATE_USER_DETAILS, VERIFY_OTP, AUTH_START, AUTH_STOP, LOGOUT_USER} from '../../actions/actionTypes'
 
 const initialState = {
-    isAuthenticated : true,
+    isAuthenticated : false,
     authenticating : false,
     staffDtls : {},
     partnerDtls : {}
@@ -20,6 +20,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAuthenticated : action.isAuthenticated
+            }
+        }
+        case LOGOUT_USER : {
+            return {
+                ...state,
+                isAuthenticated : false
             }
         }
         case AUTH_START :{

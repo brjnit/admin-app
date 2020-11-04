@@ -7,32 +7,18 @@ import BasicButton from "../basicButton";
 import {  connect } from "react-redux";
 import TextField from '../textField';
 import {getConsumerByPhone} from '../../Redux/actions/UserActions'
-import AddCustomer from '../../Component/addCustomer'
+import EditCustomer from '../../Component/EditCustomer'
 import {withRouter} from 'react-router-dom'
+import Loader from '../loader'
 
 
 
 const ManageEmployee = (props) => {
     const [campus, setCampus] = useState('')
     const [company, setCompany] = useState('')
-    const [type, setType] = useState('')
     const [mobNum, setMobNum] = useState('')
-    const [emailId, setEmailId] = useState(props.staffDtls.emailId)
-    const [fromDate, onSelectFromDate] = useState(new Date());
-    const [toDate, onSelectToDate] = useState(new Date());
     const [showMobileField, setShowMobileField] = useState(false) 
     
-    const configEmailField = {
-        label: "Report will be emailed on this email Id",
-        placeHolder: "Enter email address",
-        value: emailId,
-        onTextChange: (value) => {
-            setEmailId(value)
-        }
-    }
-    
-   
-
     const handleAddEmployee = () =>{
         props.history.push({to:'/home',hash :"AddUser"})
     }
@@ -133,7 +119,8 @@ const ManageEmployee = (props) => {
         label: "Search Employee",
         placeHolder: "Enter employee mobile number",
         maxLength : 10,
-        value: emailId,
+        value: mobNum,
+        error : props.manageUser.fetchError.errorMessage,
         onTextChange: (value) => {
             setMobNum(value)
         }
@@ -155,8 +142,11 @@ const ManageEmployee = (props) => {
                     <div className ="addUser">
                         <BasicButton {...configSearchEmployee}/>
                     </div>
+                    <div style = {{marginLeft : 10}}>
+                    {props.manageUser.fetchStart&&<Loader/>}
+                    </div>
             </div>}
-            <AddCustomer/>
+            {props.userDtls.detailsAvailable&&<EditCustomer usrDtls = {props.userDtls}/>}
         </Wrapper>
     )
 }
@@ -169,7 +159,8 @@ const mapStateToProps = state => {
     return {
         configurationList: state.configuration.configurationList,
         staffDtls : state.auth.staffDtls,
-        userDtls : state.user.manageUser.selectedUserDtls
+        userDtls : state.user.manageUser.selectedUserDtls,
+        manageUser : state.user.manageUser
     }
 }
 

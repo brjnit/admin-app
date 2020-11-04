@@ -1,4 +1,4 @@
-import {SELECT_LOCATION, GET_STAFF_LIST} from './actionTypes'
+import {SELECT_LOCATION, GET_STAFF_LIST, GET_DASHBOARD_DATA} from './actionTypes'
 import APIRequest from '../../Network/APIRequest';
 
 export const selectLocation = (locationDtls) => {
@@ -45,6 +45,26 @@ const getStaffListResult = (staffList) => {
 }
 
 
-export const getDashBoardData = () =>{
-    
+export const getDashBoardData = (startDate, endDate, campus, type) =>{
+    return (dispatch)=>{
+        let apiRequest = new APIRequest()
+        let inputParam = {};//{"id" : id, "isDeleted":true};
+        inputParam['startDate'] = startDate;
+        inputParam['endDate'] = endDate;
+        inputParam['campus'] = campus;
+        inputParam['enquiryType'] = type;
+        apiRequest.callAPI("getDashBoardData", inputParam).then((response) =>{
+            console.log("[AccountAction.js] response getDashBoardData", response)
+            if(response.status == 200){
+                dispatch(getDashBoardDataResult(response.data))
+            }
+        });
+    }
+}
+
+const getDashBoardDataResult = (dashboardData) =>{
+    return {
+        type : GET_DASHBOARD_DATA,
+        dashboardData: dashboardData
+    }
 }

@@ -13,10 +13,10 @@ import {selectLocation} from '../../Redux/actions/AccountActions'
 import {withRouter} from 'react-router-dom'
 import ManageEmployee from '../../Component/manageEmployee'
 import AddCustomer from '../../Component/addCustomer'
+import {logoutUser} from '../../Redux/actions/AuthActions'
 
 const Home = (props) => {
 
-    const [selectedMenu, setSelectedMenu] = useState(1)
     const [isAddUser, setAddUser] = useState(false)
     const [showMenu, setShowMenu] = useState(true)
 
@@ -72,9 +72,10 @@ const Home = (props) => {
                 data = {
                     editAction: editUser,
                     deleteAction: () => { },
-                    addAction: addUser
+                    addAction: addUser,
+                    locationData : getLocationsData()
                 }
-                return <Staff selectedLocation = {props.selectedLocation} {...data}/>
+                return <Staff {...data}/>
                 break;
             }
             case "#AddStaff" : {
@@ -135,10 +136,7 @@ const Home = (props) => {
             for (var i = 0; i < optionsArray.length; i++) {
                 data.push(optionsArray[i])
             }
-            console.log("[home.js] defaultLocation :: ",{'name':optionsArray[0], 'id': options[optionsArray[0]].id})
         }
-        console.log("[Home.js] data :: ", data)
-        
         return data;
     }
 
@@ -152,7 +150,7 @@ const Home = (props) => {
         isBack: false,
         leftButtonAction: () => {setShowMenu(!showMenu) },
         isLoggedIn: true,
-        logoutEvent: () => { },
+        logoutEvent: props.logoutUser,
         selectedLocation: props.selectedLocation.name,
         locations: getLocationsData(),
         handleLocationSelection : handleLocationSelection
@@ -170,8 +168,6 @@ const Home = (props) => {
         onSelectedMenu: handleMenuSelection
     }
 
-    console.log("[Home.js]  configurationList :: ", props.configurationList)
-    console.log("[Home.js]  props :: ", props)
     return (
 
         <div className='Home'>
@@ -195,7 +191,8 @@ Home.propTypes = {
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchConfigurationList: () => dispatch(fetchConfigurationList()),
-        selectLocation : (locationDtls) => dispatch(selectLocation(locationDtls))
+        selectLocation : (locationDtls) => dispatch(selectLocation(locationDtls)),
+        logoutUser : ()=>dispatch(logoutUser())
     }
 }
 

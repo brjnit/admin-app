@@ -39,7 +39,7 @@ const Staff = (props) => {
 
     useEffect(() => {
         props.getStaffList(props.selectedLocation.id)
-    }, []);
+    },[props.selectedLocation]);
 
     return (
         <Wrapper>
@@ -59,7 +59,8 @@ Staff.propTypes = {
 const mapStateToProps = state => {
     return {
         configurationList: state.configuration.configurationList,
-        staffList : state.account.staffList
+        staffList : state.account.staffList,
+        selectedLocation: state.account.selectedLocation
     }
 }
 

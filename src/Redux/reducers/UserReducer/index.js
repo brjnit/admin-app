@@ -1,8 +1,10 @@
-import {GET_CONSUMER_DTLS} from '../../actions/actionTypes'
+import {GET_CONSUMER_DTLS, FETCH_USER_START, FETCH_USER_ERROR} from '../../actions/actionTypes'
 
 const initialState = {
     manageUser : {
-        selectedUserDtls : {}
+        selectedUserDtls : {detailsAvailable: false},
+        fetchStart: false,
+        fetchError : {}
     }
     
 
@@ -14,7 +16,31 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 manageUser : {
                     ...state.manageUser,
-                    selectedUserDtls : action.consumerDtls
+                    selectedUserDtls : {...action.consumerDtls, detailsAvailable : true},
+                    fetchStart : false,
+                    fetchError : {}
+                },
+            }
+        }
+        case FETCH_USER_START: {
+            return {
+                ...state,
+                manageUser : {
+                    ...state.manageUser,
+                    selectedUserDtls : { detailsAvailable : false},
+                    fetchStart : true,
+                    fetchError :{}
+                },
+            }
+        } 
+        case FETCH_USER_ERROR : {
+            return {
+                ...state,
+                manageUser : {
+                    ...state.manageUser,
+                    selectedUserDtls : { detailsAvailable : false},
+                    fetchStart : false,
+                    fetchError : action.error
                 },
             }
         }

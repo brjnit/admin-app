@@ -1,4 +1,4 @@
-import {VERIFY_OTP, SEND_OTP, UPDATE_USER_DETAILS, AUTH_START, AUTH_STOP} from './actionTypes'
+import {VERIFY_OTP, SEND_OTP, UPDATE_USER_DETAILS, AUTH_START, AUTH_STOP,LOGOUT_USER} from './actionTypes'
 import APIRequest from '../../Network/APIRequest';
 
 export const sendOTP = ( mobNum) =>{
@@ -74,9 +74,11 @@ export const getStaffPartnerDetails = (staffId) =>{
             if(response.status == 200){
                 response = response.data
                 if(response.staff.role == "Admin"){
-                    dispatch(verifyOTPResult(true))
+                    
                     dispatch(authStop())
                     dispatch(updateStaffAndPartnerDetails(response.partner, response.staff))
+                    setTimeout(10000,dispatch(verifyOTPResult(true)))
+                    
                     
                 } else {
                     alert("You are not authorized to access the dashboard   ")
@@ -96,3 +98,8 @@ const updateStaffAndPartnerDetails = ( partnerDtls, staffDtls) =>{
     }
 }
 
+export const logoutUser = () =>{
+    return {
+        type : LOGOUT_USER
+    }
+}
