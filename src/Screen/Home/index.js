@@ -4,24 +4,34 @@ import Header from '../../Component/header';
 import EditableTable from '../../Component/staffTable';
 import CustomDrawer from '../../Component/drawer';
 import AddUser from '../../Component/addUser';
+import AddService from '../../Component/addService'
 import Staff from '../../Component/staff'
 import Dashboard from '../../Component/dashboard';
 import Report from '../../Component/report';
 import { connect } from 'react-redux';
 import { fetchConfigurationList } from '../../Redux/actions/ConfigurationAction'
-import {selectLocation} from '../../Redux/actions/AccountActions'
+import {selectLocation, getPartnerWorkFLowConfig} from '../../Redux/actions/AccountActions'
 import {withRouter} from 'react-router-dom'
 import ManageEmployee from '../../Component/manageEmployee'
 import AddCustomer from '../../Component/addCustomer'
 import {logoutUser} from '../../Redux/actions/AuthActions'
+import ManageServices from '../../Component/ManageServices'
+import ServiceDetails from '../../Component/ServiceDetails'
+
 
 const Home = (props) => {
 
     const [isAddUser, setAddUser] = useState(false)
     const [showMenu, setShowMenu] = useState(true)
+    const consoleConfig = props.configurationList.console
+    let theme = "dailyget"
+    if(consoleConfig!=undefined && consoleConfig.theme !=undefined){
+        theme = consoleConfig.theme
+    }
 
     useEffect(() => {
         props.fetchConfigurationList()
+        props.getPartnerWorkFLowConfig("PARTNER", props.partnerDtls.id)
     }, []);
   
     const serviceList = [
@@ -60,6 +70,7 @@ const Home = (props) => {
 
     const handleRightPanel = () => {
         const hash = props.location.hash
+        console.log("[Home.js] props ", props)
         var data = {}
         switch (hash) {
             case "#ManageEmployee" :
@@ -91,6 +102,27 @@ const Home = (props) => {
                 return <AddCustomer />
                 break;
             }
+            case "#ManageServices" : {
+                data = {
+                    editAction: editUser,
+                    deleteAction: () => { },
+                    addAction: addUser
+                }
+                return <ManageServices />
+                break;
+            }
+            case "#AddService" : {
+                data = {
+                    editAction: editUser,
+                    deleteAction: () => { },
+                    addAction: addUser
+                }
+                return <AddService />
+                break;
+            }
+            case "#ServiceDetails" : {
+                return <ServiceDetails />
+            }
             default :{
                 const config = {
                     data: [{
@@ -120,6 +152,7 @@ const Home = (props) => {
         
         props.history.push({ to:'/home', hash:"AddStaff"})
     }
+
     const handleMenuSelection = (hash) => {
         props.history.push({ to:'/home', hash:hash})
         return handleRightPanel()
@@ -156,22 +189,35 @@ const Home = (props) => {
         handleLocationSelection : handleLocationSelection
     }
 
-    const menuItems =  [
-        { id: 1, text: "Dashboard" },
-        { id: 3, text: "Report", hash : "Report" },
-        { id: 4, text: "Manage Staff", hash : "ManageStaff" },
-        { id: 5, text: "Manage Employee", hash : "ManageEmployee"},
-    ];
+    
+
+    const getMenuItems = () =>{
+        const consoleConfig = props.configurationList.console
+        let menuItems =  [
+            { id: 1, text: "Dashboard", icon : "dashboard" },
+            { id: 3, text: "Report", hash : "Report", icon : "assessment" },
+            { id: 4, text: "Control Access", hash : "ManageStaff", icon : "lock" },
+            { id: 6, text: "Manage Services", hash : "ManageServices", icon : "settingsapplication"},
+            { id: 5, text: "Manage Employee", hash : "ManageEmployee", icon : "settingsapplication"},
+            
+        ];
+        console.log("[Home.js] consoleConfig :: ", consoleConfig)
+        if(consoleConfig != undefined &&  consoleConfig.menus!= undefined){
+            menuItems = consoleConfig.menus
+        }
+
+        return menuItems
+    }
 
     const configMenu = {
-        menuItems: menuItems,
+        menuItems: getMenuItems(),
         onSelectedMenu: handleMenuSelection
     }
 
+  
     return (
-
         <div className='Home'>
-            <Header {...configHeader} />
+            <Header {...configHeader} theme = {theme}/>
             <div className='main'>
                 {showMenu&&<div className='leftPanel'>
                     <CustomDrawer {...configMenu} />
@@ -192,7 +238,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         fetchConfigurationList: () => dispatch(fetchConfigurationList()),
         selectLocation : (locationDtls) => dispatch(selectLocation(locationDtls)),
-        logoutUser : ()=>dispatch(logoutUser())
+        logoutUser : ()=>dispatch(logoutUser()),
+        getPartnerWorkFLowConfig : (entiyType, entityId) => (dispatch(getPartnerWorkFLowConfig(entiyType, entityId)))
     }
 }
 
@@ -200,7 +247,9 @@ const mapStateToProps = state => {
     return {
         configurationList: state.configuration.configurationList,
         account: state.account,
-        selectedLocation: state.account.selectedLocation
+        selectedLocation: state.account.selectedLocation,
+        partnerDtls : state.auth.partnerDtls,
+        workFlowConfig : state.account.workFlowConfig
     }
 }
 

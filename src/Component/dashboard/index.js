@@ -5,6 +5,8 @@ import './styles.scss'
 import { AccountBalance } from "@material-ui/icons";
 import {connect} from 'react-redux'
 import { getDashBoardData } from "../../Redux/actions/AccountActions";
+import DatePicker from 'react-date-picker';
+import { InputLabel } from "@material-ui/core";
 
 const Dashboard = (props) => {
     
@@ -28,10 +30,6 @@ const Dashboard = (props) => {
         props.getDashBoardData(getFormatedDate(fromDate), getFormatedDate(toDate))
      }, []);
 
-     const getDashBoardDataTest = () =>{
-        toDate.setTime(toDate.getTime() + 86400000)
-        props.getDashBoardData(getFormatedDate(fromDate), getFormatedDate(toDate))
-     }
     
     const getFormatedDate = (date) =>{
         return ((date.getMonth() > 8) ? (date.getMonth() + 1)+'' : ('0' + (date.getMonth() + 1))) + ((date.getDate() > 9) ? date.getDate() +'': ('0' + date.getDate())) +  date.getFullYear();
@@ -39,6 +37,14 @@ const Dashboard = (props) => {
     
     return (
         <div className="dashboard">
+            <div className="date_select">
+                    <InputLabel className = "inputLabel">Date</InputLabel>
+                    <DatePicker
+                        value={fromDate}
+                        maxDate = {new Date()}
+                        disabled = {true}
+                    />
+                </div>
             {handleDisplay() }
         </div>
     )

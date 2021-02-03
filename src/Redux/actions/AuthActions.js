@@ -44,7 +44,6 @@ export const verifyOTP = (mobNum, OTP) =>{
                 response = response.data
                 if(response.isVerified){
                     const partnerId = response.id;
-                    
                     dispatch(getStaffPartnerDetails(partnerId))
                 } else {
                     dispatch(authStop());
@@ -74,14 +73,11 @@ export const getStaffPartnerDetails = (staffId) =>{
             if(response.status == 200){
                 response = response.data
                 if(response.staff.role == "Admin"){
-                    
                     dispatch(authStop())
                     dispatch(updateStaffAndPartnerDetails(response.partner, response.staff))
                     setTimeout(10000,dispatch(verifyOTPResult(true)))
-                    
-                    
                 } else {
-                    alert("You are not authorized to access the dashboard   ")
+                    alert("You are not authorized to access the dashboard")
                     dispatch(authStop())
                 }
             }

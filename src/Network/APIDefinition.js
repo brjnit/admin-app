@@ -60,7 +60,22 @@ const apiList = {
         path : '/consumerByPhoneNumber/$phoneNumber',
         method : GET,
         params : ['phoneNumber']
-    }
+    },
+    getPartnerWorkFlowConfig : {
+        path : "/workflow/$entiyType/$partnerId",
+        method : GET,
+        params : ["partnerId", "entiyType"]
+    },
+    getPartnerInGroup : {
+        path : "/partnersInSameGroup/$partnerId?consumerId=$consumerId",
+        method : GET,
+        params : ["partnerId", "consumerId"]
+    },
+    createService : {
+        path : "/partner?consumerId=$consumerId&isGroup=$isGroup",
+        method : POST,
+        params : ["name", "address", "status", "isRecommended", "showProfileToNearbyCustomers", "isGroup", "consumerId"]
+    },
 }    
 
 export const getAPITemplate = (apiName) =>{

@@ -8,6 +8,7 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import Icon from "@material-ui/core/Icon";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 
@@ -72,28 +73,25 @@ const useStyles = makeStyles(theme => ({
 export default function CustomDrawer(props) {
     const classes = useStyles();
     const { menuItems, onSelectedMenu } = props
-    
-    
 
     const onClickListItem = (value) => () => {
         onSelectedMenu(value)
     }
 
     return (
-                <div className={classes.drawerContainer}>
-                    <List  >
-                        {menuItems != null && menuItems.map(item => (
-                            <ListItem button key={item.id} onClick={onClickListItem(item.hash)}>
-                                <ListItemIcon  >
-                                    {item.id % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={item.text} />
-                            </ListItem>
-
-                        ))}
-                    </List>
-                    <Divider />
-                </div> 
+        <div className={classes.drawerContainer}>
+            <List>
+                {menuItems != null && menuItems.map(item => (
+                    <ListItem button key={item.id} onClick={onClickListItem(item.hash)}>
+                        <ListItemIcon  >
+                        <Icon>{item.icon}</Icon>
+                        </ListItemIcon>
+                        <ListItemText primary={item.text} />
+                    </ListItem>
+                ))}
+            </List>
+            <Divider />
+        </div> 
     );
 }
 

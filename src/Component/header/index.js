@@ -4,6 +4,7 @@ import { ArrowBack, Menu, ExitToApp } from '@material-ui/icons';
 import './styles.scss'
 import Logo from '../../Assets/DailyGetLogo.png'
 import DropDown from '../dropDown'
+import colors from '../../styles/colors'
 
 
 const Header = (props) => {
@@ -32,7 +33,7 @@ const Header = (props) => {
     }
 
     return (
-        <header data-test="headerComponent">
+        <header data-test="headerComponent" style = {{backgroundColor : colors[props.theme]["blue02"]}}>
             <div className="button" onClick={submitEvent}>
                 {isBack ? <ArrowBack style = {{color:'white', fontSize : 40}}/> : <Menu style = {{color:'white', fontSize : 40}}/>
                 }

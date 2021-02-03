@@ -90,14 +90,7 @@ const ManageEmployee = (props) => {
         }
     }
 
-    const configTypeSelect = {
-        label: "Type",
-        list: ['Visitor', 'Employee'],
-        emitEvent: (value) => {
-            setType(value)
-        }
-    }
-
+   
     const checkSearchButton = () => {
         console.log("[ManageEmployye.js] mobNum ", mobNum)
         const regEx =  /^\d{10}$/

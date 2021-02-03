@@ -13,7 +13,7 @@ import ConfirmationDialogue from '../confirmationDialogue'
 
 const AddCustomer = (props) => {
     const [userName, setUserName] = useState('')
-    const [emailId, setEmailId] = useState('')
+    const [description, setDescription] = useState('')
     const [mobileNum, setMobileNumber] = useState('')
     const [campus, setCampus] = useState('')
     const [company, setCompany] = useState('')
@@ -27,7 +27,7 @@ const AddCustomer = (props) => {
 
     const handleAddStaff = () => {
         setShowDialogue(false)
-        props.addNewUser(userName, mobileNum, campus, emailId, company, image)
+        props.addNewUser(userName, mobileNum, campus, description, company, image)
     }
 
     const configAddUser = {
@@ -47,23 +47,24 @@ const AddCustomer = (props) => {
     }
     
     const configMobileField = {
-        label: "Mobile Number:",
-        placeholder: "Enter mobile number",
+        label: "Number:",
+        placeholder: "Enter number",
         value: mobileNum,
-        maxLength : 10,
+        maxLength : 15,
         type: "text",
         onTextChange: (value) => {
             setMobileNumber(value)
         }
     }
 
-    const configEmailId = {
-        label: "Email Id:",
-        placeholder: "Enter email (Optional)",
-        value: emailId,
+    const configDescription = {
+        label: "Service Description",
+        placeholder: "Enter description",
+        value: description,
+        maxLength : 25,
         type: "text",
         onTextChange: (value) => {
-            setEmailId(value)
+            setDescription(value)
         }
     }
 
@@ -133,9 +134,9 @@ const AddCustomer = (props) => {
       
     return (
         <section className='add-user'>
-            <div className='header'>Enter User Details</div>
+            <div className='header'>Add New Number to List</div>
             <div className = "profilePic">
-            <div style={{marginBottom : 15}}>Select Profile Picture</div>
+            <div style={{marginBottom : 15}}>Select Icon</div>
             <img id="target" src={image} style = {{maxWidth : 200, maxHeight : 200}}/>
             <input type="file" onChange={onFileChange} accept="image/png, image/jpeg"  className ="imageSelect"/> 
             </div>
@@ -144,11 +145,8 @@ const AddCustomer = (props) => {
             <div style={{height:5}}></div>
             <TextField {...configMobileField} />
             <div style={{height:5}}></div>
-            <TextField {...configEmailId} />
+            <TextField {...configDescription} />
             <div style={{height:10}}></div>
-            <DropDown {...configCampusSelect} />
-            <div style={{height:15}}></div>
-            <DropDown {...configCompnaySelect} />
             <Footer>
                 <BasicButton  {...configAddUser} />
             </Footer>

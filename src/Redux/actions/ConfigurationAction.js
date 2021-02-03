@@ -23,7 +23,7 @@ export const fetchConfigurationList = () =>{
                             data.push(optionsArray[i])
                         }
                         console.log("[ConfigurationAction.js] defaultLocation :: ",{'name':optionsArray[0], 'id': options[optionsArray[0]].id})
-                        dispatch(selectLocation({'name':optionsArray[0], 'id': options[optionsArray[0]].id}));
+                        dispatch(selectLocation({'name':optionsArray[0], 'id': options[optionsArray[0]].id, 'listId':options[optionsArray[0]].listId}));
                     }
                 }
             }

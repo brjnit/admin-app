@@ -23,7 +23,7 @@ export default class APIRequest {
                 if( state.auth.partnerDtls.tenant != null && state.auth.partnerDtls.tenant != undefined){
                     headers["tenant"] = state.auth.partnerDtls.tenant
                 }
-                //headers["tenant"] = 'technopolis'
+                headers["tenant"] = 'technopolis'
                 postBody = {
                             method: GET,
                             headers: headers
@@ -54,6 +54,7 @@ export default class APIRequest {
     generateGETRequest = (requestTemplate, inputParams) =>{
         const paramNames = requestTemplate.params;
         let path = requestTemplate.path
+        console.log("[APIRequest.js] requestTemplate :: ", requestTemplate)
         if(paramNames == null || paramNames == undefined){
             return requestTemplate.path;
         } else {
@@ -66,7 +67,7 @@ export default class APIRequest {
                     let lastPath = path.substring(position,path.length)
                     firstPath = firstPath.substring(0,firstPath.lastIndexOf('&')+1)
                     lastPath = lastPath.substring(lastPath.indexOf('&')+1, lastPath.lenght)
-                    console.log(firstPath+lastPath)
+                    console.log("[APIRequest.js] path parts ", firstPath,lastPath)
                     path = firstPath+lastPath
                 } else {
                     path = path.replace("$"+paramNames[i], inputParams[paramNames[i]])
@@ -87,7 +88,7 @@ export default class APIRequest {
         if( state.auth.partnerDtls.tenant != null && state.auth.partnerDtls.tenant != undefined){
             headers["tenant"] = state.auth.partnerDtls.tenant
         }
-        //headers["tenant"] = 'technopolis'
+        headers["tenant"] = 'technopolis'
         let body = {
             method: requestTemplate.method,
             headers: headers,
